@@ -1,5 +1,6 @@
 ﻿using GymManagementBLL.ViewModels.SessionViewModels;
 using GymManagementDAL.Entites;
+using GymManagementSystemBLL.ViewModels.SessionViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,10 @@ namespace GymManagementBLL.Services.Interfaces
     {
         public IEnumerable<SessionViewModel> GetAllSessions();
         public SessionViewModel? GetSessionById(int sessionId);
+        public bool CreateSession(CreateSessionViewModel createdsession);
+        public UpdateSessionViewModel? GetSessionForUpdate(int SessionId);
+        public bool UpdateSession(UpdateSessionViewModel updatedSession,int sessionId);
+
+        public bool DeleteSession(int sessionId);
     }
 }
