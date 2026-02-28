@@ -16,7 +16,7 @@ namespace GymManagementBLL.ViewModels.MemberViewModels
         [EmailAddress(ErrorMessage = "Invalid Email Format")]
         [StringLength(100, MinimumLength = 5, ErrorMessage = "Email Must be between 5 and 100 Chars")]
         [DataType(DataType.EmailAddress)]
-        public string Email = null!;
+        public string Email { get; set; } = null!;
 
         [Required(ErrorMessage = "Phone Is Required")]
         [Phone(ErrorMessage = "Invalid Phone Format")]

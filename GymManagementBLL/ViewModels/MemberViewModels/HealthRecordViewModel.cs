@@ -11,15 +11,15 @@ namespace GymManagementBLL.ViewModels.MemberViewModels
     {
         [Required(ErrorMessage ="Height Is Required")]
         [Range(0.1,300,ErrorMessage ="Height Must Be Between Greater Than 0 and Less Than 300")]
-        public decimal Height { get; set; }
+        public decimal? Height { get; set; }   // the nullable here only to make the required validation works 
 
         [Required(ErrorMessage = "Height Is Required")]
         [Range(0.1, 200, ErrorMessage = "Height Must Be Between Greater Than 0 and Less Than 200")]
-        public decimal Weight { get; set; }
+        public decimal? Weight { get; set; }
 
         [Required(ErrorMessage = "Blood Type Is Required")]
         [StringLength(3,ErrorMessage ="Blood Type Must Be 3 Char Or Less")]
         public string BloodType { get; set; } = null!;
-        public string? Note { get; set; }
+        public string? Note { get; set; }   // if here the property is nullable then in the view you have to check if null appear to a user a message for ex that note not found
     }
 }

@@ -21,7 +21,7 @@ namespace GymManagementDAL.Data.DataSeed
                 if (!HasPlans)
                 {
                     var plans = LoadDataFromJson<Plan>("plans.json");
-                    if (plans.Any())
+                    if (plans.Any()) 
                     {
                         dbContext.Plans.AddRange(plans);
                     }

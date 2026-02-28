@@ -1,4 +1,6 @@
 using GymManagementBLL;
+using GymManagementBLL.Services.Classes;
+using GymManagementBLL.Services.Interfaces;
 using GymManagementDAL.Data.Contexts;
 using GymManagementDAL.Data.DataSeed;
 using GymManagementDAL.Entites;
@@ -18,13 +20,15 @@ namespace GymManagementPL
             builder.Services.AddControllersWithViews();
             builder.Services.AddDbContext<GymDbContext>(options=>
             {
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnecton"));
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
             
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             builder.Services.AddScoped<IsessionRepository, SessionRepository>();
             builder.Services.AddAutoMapper(options => options.AddProfile(new MappingProfile()));
+            builder.Services.AddScoped<IAnalyticService, AnalyticService>();
+            builder.Services.AddScoped<IMemberService, MemberService>();
 
 
 
