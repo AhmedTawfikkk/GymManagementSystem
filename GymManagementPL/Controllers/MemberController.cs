@@ -67,12 +67,12 @@ namespace GymManagementPL.Controllers
             bool Result = _memberService.CreateMember(createdMember);
             if (Result)
             {
-                TempData["Succeed"] = "Member Created Successfully";   // temp data to be valid for the next request when we redirect to index
+                TempData["Success"] = "Member Created Successfully";   // temp data to be valid for the next request when we redirect to index
                 return RedirectToAction("Index");
             }
             else
             {
-                TempData["Failed"] = "Member Failed To Be Created";
+                TempData["ErrorMessage"] = "Member Failed To Be Created";
                 return RedirectToAction("Index");
             }
         }
@@ -108,7 +108,7 @@ namespace GymManagementPL.Controllers
             bool result = _memberService.UpdateMember(id, updatedMember);
             if (result)
             {
-                TempData["Succeed"] = "Member Updated Successfully";
+                TempData["Success"] = "Member Updated Successfully";
                 return RedirectToAction("Index");
             }
             else
@@ -145,7 +145,7 @@ namespace GymManagementPL.Controllers
             }
             else
             {
-                TempData["Succes Message"] = "Member Deleted Successfully";
+                TempData["Success"] = "Member Deleted Successfully";
             }
                 return RedirectToAction("Index");
 

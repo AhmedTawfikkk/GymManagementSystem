@@ -31,12 +31,12 @@ namespace GymManagementBLL.Services.Classes
                     name = createdTrainer.Name,
                     Email = createdTrainer.Email,
                     Phone = createdTrainer.Phone,
-                    DateOfBirth = createdTrainer.DateOfBirth,
+                    DateOfBirth = createdTrainer.DateOfBirth!.Value,  //dateofbirth is nullable in the viewmodel to return the validation message, to make mapping we need to extract the value (now there is no null stored in db only a value or exception and iam sure that there will be no exception)
                     Specialities = createdTrainer.Specialities,
-                    gender = createdTrainer.Gender,
+                    gender = createdTrainer.Gender!.Value,
                     address = new Address
                     {
-                        BuildingNumber = createdTrainer.BuildingNumber,
+                        BuildingNumber = createdTrainer.BuildingNumber!.Value,
                         street = createdTrainer.Street,
                         City = createdTrainer.City,
                     }
@@ -81,6 +81,8 @@ namespace GymManagementBLL.Services.Classes
                 Name = trainer.name,
                 Email = trainer.Email,
                 Phone = trainer.Phone,
+                DateOfBirth = trainer.DateOfBirth,
+                address= $"{trainer.address.BuildingNumber}-{trainer.address.street}-{trainer.address.City}",
                 Specialization = trainer.Specialities.ToString()
             };
         }
@@ -120,7 +122,9 @@ namespace GymManagementBLL.Services.Classes
         public bool UpdateTrainer(UpdateTrainerViewModel updatedTrainer, int TrainerId)
         {
             var TrainerToUpdate= _unitOfWork.GetRepository<Trainer>().GetById(TrainerId);
-            if (TrainerToUpdate == null || IsEmailExists(updatedTrainer.Email) || IsPhoneExists(updatedTrainer.Phone))
+            var emailExists = _unitOfWork.GetRepository<Trainer>().GetAll(m => m.Email == updatedTrainer.Email && m.Id != TrainerId);
+            var phoneExists = _unitOfWork.GetRepository<Trainer>().GetAll(m => m.Phone == updatedTrainer.Phone && m.Id != TrainerId);
+            if (TrainerToUpdate == null || emailExists.Any() || phoneExists.Any())
             {
                 return false;
             }

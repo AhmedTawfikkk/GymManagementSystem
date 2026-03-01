@@ -20,7 +20,7 @@ namespace GymManagementBLL.ViewModels.TrainerViewModels
         [EmailAddress(ErrorMessage = "Invalid Email Format")]
         [StringLength(100, MinimumLength = 5, ErrorMessage = "Email Must be between 5 and 100 Chars")]
         [DataType(DataType.EmailAddress)]
-        public string Email = null!;
+        public string Email { get; set; } = null!;
 
         [Required(ErrorMessage = "Phone Is Required")]
         [Phone(ErrorMessage = "Invalid Phone Format")]
@@ -30,14 +30,14 @@ namespace GymManagementBLL.ViewModels.TrainerViewModels
 
         [Required(ErrorMessage = "DateOfBirth Is Required")]
         [DataType(DataType.Date)]
-        public DateOnly DateOfBirth { get; set; }
+        public DateOnly? DateOfBirth { get; set; } 
 
         [Required(ErrorMessage = "Gender Is Required")]
-        public Gender Gender { get; set; }
+        public Gender? Gender { get; set; }
 
         [Required(ErrorMessage = "Building Number Is Required")]
         [Range(1, 9000, ErrorMessage = "Building Number Must be Between 1 and 9000")]
-        public int BuildingNumber { get; set; }
+        public int? BuildingNumber { get; set; }
 
         [Required(ErrorMessage = "Street Is Required")]
         [StringLength(30, MinimumLength = 2, ErrorMessage = "Street Must Be Between 2 and 30 Char")]
