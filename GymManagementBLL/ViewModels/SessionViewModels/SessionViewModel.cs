@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,8 +19,8 @@ namespace GymManagementBLL.ViewModels.SessionViewModels
         public int AvailableSlots { get; set; } 
 
         #region Computed
-        public string DateDisplay=> $"{StartDate:MMM dd, yyyy}";
-        public string TimeRaneeDisplay => $"{StartDate:hh:mm tt} - {EndDate:hh:mm tt}";
+        public string DateDisplay=> $"{StartDate.ToString("MMM dd, yyyy",CultureInfo.InvariantCulture)}";
+        public string TimeRaneeDisplay => $"{StartDate.ToString("hh:mm tt",CultureInfo.InvariantCulture)} - {EndDate.ToString("hh:mm tt",CultureInfo.InvariantCulture)}";
         public TimeSpan duration => EndDate - StartDate;    
         public string Status
         {

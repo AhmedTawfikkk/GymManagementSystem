@@ -6,7 +6,9 @@ using GymManagementDAL.Data.DataSeed;
 using GymManagementDAL.Entites;
 using GymManagementDAL.Repositories.Classes;
 using GymManagementDAL.Repositories.Interfaces;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 
 namespace GymManagementPL
 {
@@ -30,15 +32,29 @@ namespace GymManagementPL
             builder.Services.AddScoped<IAnalyticService, AnalyticService>();
             builder.Services.AddScoped<IMemberService, MemberService>();
             builder.Services.AddScoped<ITrainerService, TrainerService>();
+            builder.Services.AddScoped<IPlanService, PlanService>();
+            builder.Services.AddScoped<IsessionService, SessionService>();
 
 
-
+            
 
             var app = builder.Build();
+            var cultureInfo = new CultureInfo("en-US");
+
+            CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+            CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
+
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture(cultureInfo),
+                SupportedCultures = new List<CultureInfo> { cultureInfo },
+                SupportedUICultures = new List<CultureInfo> { cultureInfo }
+            });
 
             #region DataSeeding
             var Scope = app.Services.CreateScope();
             var dbContext = Scope.ServiceProvider.GetRequiredService<GymDbContext>();
+          
             if (dbContext.Database.GetPendingMigrations().Any())
             {
                 dbContext.Database.Migrate();

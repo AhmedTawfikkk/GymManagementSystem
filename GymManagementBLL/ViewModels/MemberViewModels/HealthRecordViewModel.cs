@@ -13,7 +13,7 @@ namespace GymManagementBLL.ViewModels.MemberViewModels
         [Range(0.1,300,ErrorMessage ="Height Must Be Between Greater Than 0 and Less Than 300")]
         public decimal? Height { get; set; }   // the nullable here only to make the required validation works 
 
-        [Required(ErrorMessage = "Height Is Required")]
+        [Required(ErrorMessage = "Weight Is Required")]
         [Range(0.1, 200, ErrorMessage = "Height Must Be Between Greater Than 0 and Less Than 200")]
         public decimal? Weight { get; set; }
 

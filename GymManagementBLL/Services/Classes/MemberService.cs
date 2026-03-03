@@ -52,7 +52,7 @@ namespace GymManagementBLL.Services.Classes
 
                 //    }
                 //};
-                var Member =_mapper.Map<Member>(member);
+                var Member =_mapper.Map<CreateMemberViewModel, Member>(member);
                 _unitOfWork.GetRepository<Member>().Add(Member);
                 return _unitOfWork.SaveChanges()>0;
             }

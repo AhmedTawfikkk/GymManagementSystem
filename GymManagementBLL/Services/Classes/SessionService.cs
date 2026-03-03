@@ -131,6 +131,17 @@ namespace GymManagementBLL.Services.Classes
             
 
         }
+        public IEnumerable<TrainerDropDownList> GetTrainerDropDownList()
+        {
+            var Trainers = _unitOfWork.GetRepository<Trainer>().GetAll();
+            return _mapper.Map<IEnumerable<TrainerDropDownList>>(Trainers);
+        }
+
+        public IEnumerable<CategoryDropDownList> GetCategoryDropDownList()
+        {
+            var Categories = _unitOfWork.GetRepository<Category>().GetAll();
+            return _mapper.Map<IEnumerable<CategoryDropDownList>>(Categories);
+        }
 
 
 
@@ -143,11 +154,11 @@ namespace GymManagementBLL.Services.Classes
         }
         private bool CategoryExists(int CategoryId)
         {
-            return _unitOfWork.GetRepository<Trainer>().GetById(CategoryId) is not null;
+            return _unitOfWork.GetRepository<Category>().GetById(CategoryId) is not null;
         }
         private bool IsDateValid(DateTime StartDate, DateTime EndDate)
         {
-            return StartDate < EndDate;
+            return (StartDate < EndDate && StartDate>DateTime.Now);
         }
         private bool IsSessionAvailableForUpdating(Session session)
         {
@@ -170,6 +181,7 @@ namespace GymManagementBLL.Services.Classes
             return true;
         }
 
+       
     }
     #endregion
 

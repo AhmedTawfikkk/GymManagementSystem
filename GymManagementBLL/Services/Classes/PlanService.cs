@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace GymManagementBLL.Services.Classes
 {
-    internal class PlanService : IPlanService
+    public class PlanService : IPlanService
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -61,7 +61,7 @@ namespace GymManagementBLL.Services.Classes
         public UpdatePlanViewModel? GetPlanToUpdate(int id)
         {
             var Plan = _unitOfWork.GetRepository<Plan>().GetById(id);
-            if (Plan == null || !HasActiveMemberShip(id) || Plan.IsActive==false)
+            if (Plan == null || HasActiveMemberShip(id) || Plan.IsActive==false)
             {
                 return null;
             }

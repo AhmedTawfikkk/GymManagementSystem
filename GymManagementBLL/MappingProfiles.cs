@@ -20,7 +20,7 @@ namespace GymManagementBLL
             MapMembers();
           
 
-
+            
 
         }
         private void MapSession()
@@ -32,30 +32,34 @@ namespace GymManagementBLL
 
             CreateMap<CreateSessionViewModel, Session>();
             CreateMap<Session, UpdateSessionViewModel>().ReverseMap();
+            CreateMap<Trainer, TrainerDropDownList>();
+            CreateMap<Category, CategoryDropDownList>();
         }
 
         private void MapMembers()
         {
-            //way 1
+            ////way 1
             //CreateMap<CreateMemberViewModel, Member>()
             //    .ForMember(s => s.address, options => options.MapFrom(src => new Address()
             //    {
             //        BuildingNumber = src.BuildingNumber,
             //        street = src.Street,
             //        City = src.City,
-            //    }));
+            //    }))
+            //    .ForMember(s => s.HealthRecord, options => options.MapFrom(src => src.HealthRecordViewModel));
+
 
             //way 2
             CreateMap<CreateMemberViewModel, Member>()
                 .ForMember(m => m.address, options => options.MapFrom(src => src))  // will take the mapping from the map of creatememberviewmodel to address
-                .ForMember(m=>m.HealthRecord,options=>options.MapFrom(src=>src.HealthRecordViewModel)); //will take the map from the mapping of healthrecordviewmodel to healthrecord
+                .ForMember(m => m.HealthRecord, options => options.MapFrom(src => src.HealthRecordViewModel)); //will take the map from the mapping of healthrecordviewmodel to healthrecord
 
             CreateMap<CreateMemberViewModel, Address>()
                 .ForMember(a => a.BuildingNumber, opt => opt.MapFrom(src => src.BuildingNumber))
                  .ForMember(a => a.street, opt => opt.MapFrom(src => src.Street))
                  .ForMember(a => a.City, opt => opt.MapFrom(src => src.City));
 
-            CreateMap<HealthRecord, HealthRecordViewModel>();
+            CreateMap<HealthRecord, HealthRecordViewModel>().ReverseMap();
 
             CreateMap<Member, MemberViewModel>()
                 .ForMember(dest=>dest.Gender,opt=>opt.MapFrom(src=>src.gender.ToString()))
