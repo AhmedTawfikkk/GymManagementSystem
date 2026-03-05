@@ -1,4 +1,5 @@
 using GymManagementBLL;
+using GymManagementBLL.Services.AttachmentService;
 using GymManagementBLL.Services.Classes;
 using GymManagementBLL.Services.Interfaces;
 using GymManagementDAL.Data.Contexts;
@@ -34,6 +35,7 @@ namespace GymManagementPL
             builder.Services.AddScoped<ITrainerService, TrainerService>();
             builder.Services.AddScoped<IPlanService, PlanService>();
             builder.Services.AddScoped<IsessionService, SessionService>();
+            builder.Services.AddScoped<IAttachmentService, AttachmentService>();
 
 
             

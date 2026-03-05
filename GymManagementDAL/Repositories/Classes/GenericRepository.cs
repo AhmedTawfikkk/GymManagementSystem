@@ -30,7 +30,7 @@ namespace GymManagementDAL.Repositories.Classes
         public IEnumerable<TEntity> GetAll(Func<TEntity, bool>? Condition)
         {
             if (Condition == null) return _DbContext.Set<TEntity>().AsNoTracking();
-            return _DbContext.Set<TEntity>().AsNoTracking().Where(Condition);
+            return _DbContext.Set<TEntity>().AsNoTracking().Where(Condition).ToList();
         }
 
        
