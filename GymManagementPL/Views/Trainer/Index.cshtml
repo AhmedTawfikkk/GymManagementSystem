@@ -1,4 +1,7 @@
 ﻿@model IEnumerable<TrainerViewModel>
+@{
+    ViewData["Title"]="Index";
+}
 <div class="container">
         <main role="main" class="pb-3">
             @if (TempData["success"] is not null)

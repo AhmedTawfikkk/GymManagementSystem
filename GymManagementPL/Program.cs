@@ -7,6 +7,7 @@ using GymManagementDAL.Data.DataSeed;
 using GymManagementDAL.Entites;
 using GymManagementDAL.Repositories.Classes;
 using GymManagementDAL.Repositories.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
@@ -36,6 +37,14 @@ namespace GymManagementPL
             builder.Services.AddScoped<IPlanService, PlanService>();
             builder.Services.AddScoped<IsessionService, SessionService>();
             builder.Services.AddScoped<IAttachmentService, AttachmentService>();
+            builder.Services.AddScoped<IAccountService, AccountService>();
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(config=>   // to add all the dependencies used inside idetity user and role
+            config.User.RequireUniqueEmail=true
+            ) .AddEntityFrameworkStores<GymDbContext>();
+            builder.Services.ConfigureApplicationCookie(options =>   // changing configuration of the cookies in identity
+            {
+                options.AccessDeniedPath = "/Account/AccessDenied";   // the default
+            });
 
 
             
@@ -56,12 +65,16 @@ namespace GymManagementPL
             #region DataSeeding
             var Scope = app.Services.CreateScope();
             var dbContext = Scope.ServiceProvider.GetRequiredService<GymDbContext>();
+            var UserManager = Scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            var RoleManager= Scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
           
             if (dbContext.Database.GetPendingMigrations().Any())
             {
                 dbContext.Database.Migrate();
             }
             GymDbContextSeeding.SeedData(dbContext);
+            IdentityContextSeeding.SeedData(UserManager, RoleManager);
+
 
 
             #endregion
@@ -78,12 +91,12 @@ namespace GymManagementPL
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Account}/{action=Login}/{id?}");
 
             app.Run();
         }
